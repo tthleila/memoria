@@ -74,18 +74,17 @@
             .score-board p {
                 margin: 5px;
             }
-
         .game-container {
             display: grid;
-            gap: 5px;
-            max-width: 900px;
+            gap: 25px;
+            max-width: 600px;
             margin: 0 auto;
             justify-content: center;
         }
 
         .card {
             background-color: white;
-            border: 2px solid #ce93d8;
+            border: 5px solid #ce93d8;
             border-radius: 20px;
             display: flex;
             justify-content: center;
@@ -95,11 +94,10 @@
             transition: transform 0.2s, background-color 0.2s;
             box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
             aspect-ratio: 1 / 1;
-            height: 100px; /* Rögzített magasság */
-            width: auto; /* Automatikus szélesség, a grid cellán belül */
+            height: 90px; 
+            width: auto; 
         }
 
-        /* Kisebb képernyőkre optimalizálás */
         @media (max-width: 600px) {
             .game-container {
                 grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)) !important;
