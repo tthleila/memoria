@@ -14,6 +14,12 @@
             color: #333;
         }
 
+        /* h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #6a1b9a;
+        }
+*/
         .selectors {
             display: flex;
             justify-content: center;
@@ -59,8 +65,8 @@
 
         .game-container {
             display: grid;
-            gap: 10px;
-            max-width: 1200px; /* Növelt max-width */
+            gap: 15px;
+            max-width: 800px;
             margin: 0 auto;
             justify-content: center;
         }
@@ -68,16 +74,16 @@
         .card {
             background-color: white;
             border: 2px solid #ce93d8;
-            border-radius: 15px;
+            border-radius: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.5em; /* Csökkentett betűméret */
+            font-size: 2em;
             cursor: pointer;
             transition: transform 0.2s, background-color 0.2s;
-            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
             aspect-ratio: 1 / 1;
-            height: auto; /* Automatikus magasság */
+            height: 100px;
         }
 
             .card.flipped, .card.matched {
@@ -93,11 +99,25 @@
             }
 
         @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-3px); }
-            50% { transform: translateX(3px); }
-            75% { transform: translateX(-3px); }
-            100% { transform: translateX(0); }
+            0% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            50% {
+                transform: translateX(5px);
+            }
+
+            75% {
+                transform: translateX(-5px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
         }
 
         .end-message {
@@ -118,28 +138,40 @@
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 1000;
-            pointer-events: none;
+            pointer-events: none; 
         }
 
         .toast {
             background-color: rgba(0, 0, 0, 0.7);
             color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 1em;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.2em;
             opacity: 0;
             animation: fadeInOut 2s ease-in-out forwards;
         }
 
         @keyframes fadeInOut {
-            0% { opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { opacity: 0; }
+            0% {
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
+    <!--<h1>Memóriajáték</h1>-->
     <div class="selectors">
         <div class="category-selector" id="categorySelector">
             <label for="category">Válassz kategóriát:</label>
@@ -207,23 +239,11 @@
             const category = document.getElementById("category").value;
             const difficulty = document.getElementById("difficulty").value;
 
-            let pairCount;
-            let columns;
-            let rows;
-
-            if (difficulty === 'easy') {
-                pairCount = 6;
-                columns = 4;
-                rows = 3;
-            } else if (difficulty === 'medium') {
-                pairCount = 12;
-                columns = 6;
-                rows = 4;
-            } else if (difficulty === 'hard') {
-                pairCount = 18;
-                columns = 9;
-                rows = 4;
-            }
+            let pairCount = {
+                easy: 6,
+                medium: 12,
+                hard: 18
+            }[difficulty];
 
             let symbols = categories[category].slice(0, pairCount);
             symbols = [...symbols, ...symbols];
@@ -237,8 +257,23 @@
 
             const gameBoard = document.getElementById("gameBoard");
             gameBoard.innerHTML = "";
-            gameBoard.style.gridTemplateColumns = `repeat(${columns}, minmax(60px, 1fr))`;
-            gameBoard.style.gridTemplateRows = `repeat(${rows}, 80px)`; /* Fix magasság, de kisebb */
+
+            let columns;
+            let rows;
+
+            if (difficulty === 'easy') {
+                columns = 4;
+                rows = 3;
+            } else if (difficulty === 'medium') {
+                columns = 6;
+                rows = 4;
+            } else if (difficulty === 'hard') {
+                columns = 9;
+                rows = 4;
+            }
+
+            gameBoard.style.gridTemplateColumns = `repeat(${columns}, minmax(80px, 1fr))`;
+            gameBoard.style.gridTemplateRows = `repeat(${rows}, 100px)`;
 
             symbols.forEach(symbol => {
                 const card = document.createElement("div");
